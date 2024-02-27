@@ -161,6 +161,7 @@ func (f *Formatter) rowMark(diff digest.Differences) error {
 	_, _ = fmt.Fprintf(f.stderr, "Rows:\n")
 
 	includes := f.ctx.GetIncludeColumnPositions()
+	separator := f.ctx.separator
 
 	additions := make([]string, 0, len(diff.Additions))
 	for _, addition := range diff.Additions {
@@ -178,15 +179,15 @@ func (f *Formatter) rowMark(diff digest.Differences) error {
 	}
 
 	for _, added := range additions {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", added, "ADDED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", added, string(separator), "ADDED")
 	}
 
 	for _, modified := range modifications {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", modified, "MODIFIED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", modified, string(separator), "MODIFIED")
 	}
 
 	for _, deleted := range deletions {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", deleted, "DELETED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", deleted, string(separator), "DELETED")
 	}
 
 	return nil
@@ -201,6 +202,7 @@ func (f *Formatter) rowmarkWithHeader(diff digest.Differences) error {
 	_, _ = fmt.Fprintf(f.stderr, "\n")
 
 	includes := f.ctx.GetIncludeColumnPositions()
+	separator := f.ctx.separator
 
 	additions := make([]string, 0, len(diff.Additions))
 	for _, addition := range diff.Additions {
@@ -233,18 +235,18 @@ func (f *Formatter) rowmarkWithHeader(diff digest.Differences) error {
 		return fmt.Errorf("unable to process headers from csv file, %v", err)
 	}
 
-	_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", strings.Join(headers, ","), "CSVDIFF")
+	_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", strings.Join(headers, string(separator)), string(separator), "CSVDIFF")
 
 	for _, added := range additions {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", added, "ADDED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", added, string(separator), "ADDED")
 	}
 
 	for _, modified := range modifications {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", modified, "MODIFIED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", modified, string(separator), "MODIFIED")
 	}
 
 	for _, deleted := range deletions {
-		_, _ = fmt.Fprintf(f.stdout, "%s,%s\n", deleted, "DELETED")
+		_, _ = fmt.Fprintf(f.stdout, "%s%s%s\n", deleted, string(separator), "DELETED")
 	}
 
 	return nil

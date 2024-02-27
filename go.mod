@@ -8,7 +8,7 @@ require (
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.1.2
 	github.com/spf13/cobra v0.0.5
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.8.4
 	golang.org/x/sys v0.1.0 // indirect
 )
 
